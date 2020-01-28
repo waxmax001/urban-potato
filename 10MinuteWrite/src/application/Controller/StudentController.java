@@ -1,5 +1,6 @@
 package application.Controller;
 
-public class StudentController extends Controller {
+public class StudentController implements UserController{
+
 
 }

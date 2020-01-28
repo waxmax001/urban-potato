@@ -8,9 +8,8 @@ module application {
 	requires transitive javafx.base;
 	requires transitive javafx.fxml;
 	requires transitive javafx.graphics;
-	//requires javafx.graphics;
 	requires transitive javafx.media;
 	requires javafx.swing;
 	requires jdk.compiler;
-	requires javafx.controls;
+	requires transitive javafx.controls;
 }

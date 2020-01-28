@@ -19,7 +19,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class StandardScene extends Scene {
-	BorderPane thePane;
+	static BorderPane thePane;
 	private List<Button> leftButtons = new ArrayList<Button>();
 	VBox left = new VBox();
 	VBox center = new VBox();
@@ -28,7 +28,7 @@ public class StandardScene extends Scene {
 	
 	public StandardScene(Stage primaryStage) {
 		super(createPane(), primaryStage.getWidth(), primaryStage.getHeight());
-		thePane = (BorderPane) this.getRoot();
+		//thePane = (BorderPane) this.getRoot();
 		thePane.setPadding(new Insets(10, 10, 10, 10)); //top, right, bottom, left
 		
 		//Left
@@ -51,7 +51,8 @@ public class StandardScene extends Scene {
 
 
 	private static BorderPane createPane() {
-		return new BorderPane();
+		thePane = new BorderPane();
+		return thePane;
 	}
 
 

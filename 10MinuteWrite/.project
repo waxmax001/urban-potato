@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>javafx-sdk-13.0.2</name>
+			<type>2</type>
+			<location>D:/Programmierung/Eclipse/Workspace/urban-potato/10MinuteWrite/lib/javafx-sdk-13.0.2</location>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -1,5 +1,5 @@
 package application.Controller;
 
-public abstract class Controller {
+public interface UserController {
 
 }

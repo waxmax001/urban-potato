@@ -1,44 +1,44 @@
 package application.View;
 
-import javafx.scene.Scene;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import application.Controller.AuthenticationController;
-import application.Controller.FormController;
 import application.View.Constants;
 
 /**
- * gedacht als Parent-Klasse von RegisterView und LogInView
- * @author M4x
+ * deprecated
+ * @author Max
  *
  */
-public class FormView extends Scene {
-	//Klassenvariablen
+public class RegisterView_Old extends Scene{
 	GridPane thePane;
 	private TextField nameField;
-	private PasswordField passwordField, passwordField2;
-	private FormController controller;
-
-	public FormView(FormController controller, Stage primaryStage) {
-		
+	private TextField passwordField;
+	private AuthenticationController controller;
+	
+	public RegisterView_Old(AuthenticationController controller, Stage primaryStage) {
 		super(new GridPane(), primaryStage.getWidth(), primaryStage.getHeight());
 		
 		this.controller = controller;
 		
 		initiatePane();
-		//addUIControls();
+		addUIControls();
+	}
+	
+	// nur zu Testzwecken
+	public RegisterView_Old(Stage primaryStage) {
+		super(new GridPane(), primaryStage.getWidth(), primaryStage.getHeight());
 	}
 	
 	private void initiatePane() {
@@ -58,15 +58,10 @@ public class FormView extends Scene {
 		
 		thePane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstraints);
 	}
-	
-	/**
-	 * muss direkt nach Konstruktor aufgerufen werden
-	 * @param headerText
-	 * @param submitText
-	 */
-	public void addUIControls(String headerText, String submitText) {
+
+	private void addUIControls() {
 		//Add header
-		Label headerLabel = new Label(headerText);
+		Label headerLabel = new Label("Bitte registrieren Sie einen Admin!");
 		headerLabel.setStyle(Constants.FONT_BIG);
 		thePane.add(headerLabel, 0,0,2,1);
 		thePane.setHalignment(headerLabel, HPos.CENTER);
@@ -84,37 +79,22 @@ public class FormView extends Scene {
 		Label passwordLabel = new Label("Passwort");
 		passwordLabel.setStyle(Constants.FONT);
 		thePane.add(passwordLabel, 0, 2);
-		passwordField = new PasswordField();
+		passwordField = new TextField();
 		passwordField.setPrefHeight(40);
 		thePane.add(passwordField, 1, 2);
 		
-		//Another Password Label
-		if(submitText == "Registrieren") {
-			Label password2Label = new Label("Passwort\n" + "bestätigen");
-			password2Label.setStyle(Constants.FONT); // + "-fx-alignment: center\n"
-			password2Label.setTextAlignment(TextAlignment.RIGHT);
-			thePane.add(password2Label, 0, 3);
-			passwordField2 = new PasswordField();
-			passwordField2.setPrefHeight(40);
-			thePane.add(passwordField2, 1, 3);
-		}
-		
-		createSubmitButton(submitText);
+		//Bestätigungsknopf
+		Button submitButton = createSubmitButton();
 	}
 
 	
-	private Button createSubmitButton(String buttonName) {
-		Button submitButton = new Button(buttonName);
+	private Button createSubmitButton() {
+		Button submitButton = new Button("Registrieren");
 		submitButton.setPrefHeight(40);
 		submitButton.setDefaultButton(true);
 		submitButton.setPrefWidth(200);
 		submitButton.setStyle(Constants.FONT + Constants.BLUE + Constants.WHITE);
-		if(buttonName=="Registrieren") {
-			thePane.add(submitButton, 0, 4, 2, 1);
-		}
-		else {
-			thePane.add(submitButton, 0, 3, 2, 1);
-		}
+		thePane.add(submitButton, 0, 3, 2, 1);
 		thePane.setHalignment(submitButton, HPos.CENTER);
 		thePane.setMargin(submitButton, new Insets(20,0,20,0));
 		submitButton.setOnAction(e -> {
@@ -128,26 +108,13 @@ public class FormView extends Scene {
 				"Formularfehler!", "Bitte geben Sie ein Passwort ein!");
 				return;
 			}
-			if(passwordField2 != null) {
-				if(passwordField2.getText().isEmpty()) {
-					showAlert(Alert.AlertType.ERROR, thePane.getScene().getWindow(),
-							"Formularfehler!", "Bitte bestätigen Sie das Passwort!");
-					return;
-				}
-				if(!passwordField2.getText().equals(passwordField.getText())) {
-					showAlert(Alert.AlertType.ERROR, thePane.getScene().getWindow(),
-							"Formularfehler!", "Die Passwörter stimmen nicht überein!");
-					return;
-				}
-			}
 			controller.formCompleted(nameField.getText(), passwordField.getText());
 			showAlert(Alert.AlertType.CONFIRMATION, thePane.getScene().getWindow(),
-					"Anmeldung erfolgreich!", "Herzlich Willkommen, " + nameField.getText());
+				"Registrierung erfolgreich!", "Herzlich Willkommen, " + nameField.getText());
 		}
 				);
 		return submitButton;
 	}
-	
 	
 	private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
 		Alert alert = new Alert(alertType);
