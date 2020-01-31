@@ -10,10 +10,11 @@ import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class AuthenticationController extends Task<Void> implements FormController {
+public class AuthenticationController extends Task<Boolean> implements FormController {
 	
 	private Stage primaryStage;
-	private boolean adminExists;
+	private boolean adminExists,
+					teacher; // Lehrer oder Schueler
 	private CountDownLatch latch;
 	
 	public AuthenticationController(Stage primaryStage, boolean adminExists) {
@@ -42,7 +43,7 @@ public class AuthenticationController extends Task<Void> implements FormControll
 	 *alternativ mit Object lock synchronized(lock) { while(condition)... lock.wait(); 
 	 */
 	@Override
-	protected Void call() throws Exception {
+	protected Boolean call() throws Exception {
 		System.out.println("Task zur Registrierung oder Login gestartet.");
 		try {
 			latch.await();
@@ -50,7 +51,7 @@ public class AuthenticationController extends Task<Void> implements FormControll
 			Thread.currentThread().interrupt();
 			System.out.println("Interrupted");
 		}
-		return null;
+		return teacher;
 	}
 	
 //	public void adminEntered(String username, String password) {
@@ -65,12 +66,16 @@ public class AuthenticationController extends Task<Void> implements FormControll
 	public void formCompleted(String username, String password) {
 		if(adminExists) { //normaler LogIn
 			System.out.println("Login erfolgreich.");
+			//ToDo überprüfe in der Datenbank, ob der User existiert
+			//Setze Teacher-Variable;
+			teacher = true; //nur zum Testen
 		}
 		else { // Kein Admin
 			System.out.println("Admin in Controller angekommen.");
-			//write config file
+			//ToDo write config file
 			System.out.println("Latch released");
 			adminExists = true;
+			teacher = true;
 		}
 		latch.countDown();
 	}

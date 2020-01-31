@@ -1,5 +1,7 @@
 package application.Model;
 
-public class Student {
+public class Student extends SchoolPerson implements DataBaseObject{
+	
+	SchoolClass klasse;
 
 }

@@ -141,8 +141,8 @@ public class FormView extends Scene {
 				}
 			}
 			controller.formCompleted(nameField.getText(), passwordField.getText());
-			showAlert(Alert.AlertType.CONFIRMATION, thePane.getScene().getWindow(),
-					"Anmeldung erfolgreich!", "Herzlich Willkommen, " + nameField.getText());
+//			showAlert(Alert.AlertType.CONFIRMATION, thePane.getScene().getWindow(),
+//					"Anmeldung erfolgreich!", "Herzlich Willkommen, " + nameField.getText());
 		}
 				);
 		return submitButton;

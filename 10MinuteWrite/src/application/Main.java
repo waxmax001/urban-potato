@@ -1,6 +1,8 @@
 package application;
 
 import application.Controller.AuthenticationController;
+import application.Controller.StudentController;
+import application.Controller.TeacherController;
 import application.View.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ public class Main extends Application{
 	
 	boolean adminExists;
 	Stage primaryStage;
+	boolean teacher; //Login als Schueler(nicht-Lehrer) oder Lehrer
 	
 //	List<Scene> sceneList = new ArrayList<Scene>();
 	
@@ -33,6 +36,8 @@ public class Main extends Application{
 		try {
 			//Abfrage in Config-File, ob Admin schon erstellt. wenn nicht, öffne RegisterView
 			adminExists = true;
+			
+			this.primaryStage = primaryStage;
 				
 			// View
 			primaryStage.setWidth(800);
@@ -72,6 +77,11 @@ private void logIn() {
 	logInTask.setOnSucceeded((succeededEvent) -> { // 
 		System.out.println("LogIn abgeschlossen und Task beendet.");
 		primaryStage.hide();
+		teacher = logInTask.getValue();
+		if (teacher)
+			System.out.println("... als Lehrer eingeloggt.");
+		else
+			System.out.println("... als Schüler eingeloggt.");
 		mainProgram();
 	});
 	Thread LogInThread = new Thread(logInTask);
@@ -80,8 +90,15 @@ private void logIn() {
 }
 	
 private void mainProgram() {
+	// Unterscheide nach Schueler oder Lehrer und erstelle passende Controller und Views;
+	if (teacher) {
+		TeacherController tController = new TeacherController();
+		
+	} else {
+		StudentController sController = new StudentController();
+		
+	}
 	System.out.println("Starte Hauptprogramm");
-	
 	// Controller
 	// Model
 	
